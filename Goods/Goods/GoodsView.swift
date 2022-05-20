@@ -24,15 +24,22 @@ class GoodsView: UIView {
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                                              heightDimension: .fractionalHeight(1)))
-        item.contentInsets = NSDirectionalEdgeInsets(top: 3,
-                                                     leading: 3,
-                                                     bottom: 3,
-                                                     trailing: 3)
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 5,
+                                                     leading: 5,
+                                                     bottom: 5,
+                                                     trailing: 5)
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                                                           heightDimension: .fractionalHeight(0.3)),
                                                        subitem: item,
                                                        count: 2)
+        
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                      leading: 10,
+                                                      bottom: 0,
+                                                      trailing: 10)
+        
         let section = NSCollectionLayoutSection(group: group)
         
         return UICollectionViewCompositionalLayout(section: section)
@@ -44,6 +51,7 @@ private extension GoodsView {
     
     func setupView() {
         backgroundColor = .white
+        collectionView.backgroundColor = .white
         addSubviews([collectionView])
         setupConstraints()
     }
@@ -52,8 +60,8 @@ private extension GoodsView {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
     

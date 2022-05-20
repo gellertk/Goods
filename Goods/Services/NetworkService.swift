@@ -19,7 +19,7 @@ class NetworkService {
     
     private weak var task: URLSessionTask?
     
-    func fetchData(completion: @escaping (Result<[Good], Error>) -> ()) {
+    func fetchData(completion: @escaping (Result<PageData, Error>) -> ()) {
         
         guard let url = URL(string: K.String.api) else {
             return
@@ -37,7 +37,7 @@ class NetworkService {
             }
             
             do {
-                let goods = try JSONDecoder().decode([Good].self, from: data)
+                let goods = try JSONDecoder().decode(PageData.self, from: data)
                 completion(.success(goods))
             } catch {
                 completion(.failure(error))
@@ -47,14 +47,10 @@ class NetworkService {
         dataTask.resume()
     }
     
-    func downloadImage(from stringURL: String, completion: @escaping (UIImage?) -> ()) -> Cancellable? {
-        
-        guard let url = URL(string: stringURL) else {
-            return nil
-        }
+    func downloadImage(from url: URL, product: Product, completion: @escaping (Product, UIImage?) -> ()) -> Cancellable? {
         
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
-            completion(cachedImage)
+            completion(product, cachedImage)
             return nil
         }
         
@@ -64,13 +60,13 @@ class NetworkService {
             
             defer {
                 DispatchQueue.main.async {
-                    completion(image)
+                    completion(product, image)
                 }
             }
             
             if let data = data {
                 image = UIImage(data: data)
-                //self?.imageCache.setObject(image ?? UIImage(), forKey: url.absoluteString as NSString)
+                self?.imageCache.setObject(image ?? UIImage(), forKey: url.absoluteString as NSString)
             }
             
         }

@@ -13,7 +13,7 @@
 		CBCE1E032836332F001F07F5 /* CartPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE1DFE2836332E001F07F5 /* CartPhotosView.swift */; };
 		CBCE1E042836332F001F07F5 /* GoodsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE1DFF2836332F001F07F5 /* GoodsView.swift */; };
 		CBCE1E0628363344001F07F5 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE1E0528363344001F07F5 /* UIView+Extension.swift */; };
-		CBCE1E0D28363842001F07F5 /* Good.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE1E0C28363842001F07F5 /* Good.swift */; };
+		CBCE1E0D28363842001F07F5 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE1E0C28363842001F07F5 /* Product.swift */; };
 		CBCE1E10283643A0001F07F5 /* GoodsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE1E0F283643A0001F07F5 /* GoodsCollectionViewCell.swift */; };
 		CBCE1E1228364FDE001F07F5 /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE1E1128364FDE001F07F5 /* UIStackView+Extension.swift */; };
 		CBCE1E14283695BD001F07F5 /* URLSessionTask+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE1E13283695BD001F07F5 /* URLSessionTask+Extension.swift */; };
@@ -31,7 +31,7 @@
 		CBCE1DFE2836332E001F07F5 /* CartPhotosView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartPhotosView.swift; sourceTree = "<group>"; };
 		CBCE1DFF2836332F001F07F5 /* GoodsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsView.swift; sourceTree = "<group>"; };
 		CBCE1E0528363344001F07F5 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
-		CBCE1E0C28363842001F07F5 /* Good.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Good.swift; sourceTree = "<group>"; };
+		CBCE1E0C28363842001F07F5 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		CBCE1E0F283643A0001F07F5 /* GoodsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsCollectionViewCell.swift; sourceTree = "<group>"; };
 		CBCE1E1128364FDE001F07F5 /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
 		CBCE1E13283695BD001F07F5 /* URLSessionTask+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionTask+Extension.swift"; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 		CBCE1E0E28363B4D001F07F5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CBCE1E0C28363842001F07F5 /* Good.swift */,
+				CBCE1E0C28363842001F07F5 /* Product.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,7 +227,7 @@
 				CBCE1E032836332F001F07F5 /* CartPhotosView.swift in Sources */,
 				CBCE1E012836332F001F07F5 /* GoodsViewController.swift in Sources */,
 				CBD9DC6B28362F3F00AC129F /* AppDelegate.swift in Sources */,
-				CBCE1E0D28363842001F07F5 /* Good.swift in Sources */,
+				CBCE1E0D28363842001F07F5 /* Product.swift in Sources */,
 				CBD9DC6D28362F3F00AC129F /* SceneDelegate.swift in Sources */,
 				CBCE1E002836332F001F07F5 /* NetworkService.swift in Sources */,
 				CBCE1E042836332F001F07F5 /* GoodsView.swift in Sources */,

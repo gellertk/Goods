@@ -13,18 +13,16 @@ class GoodsViewController: UIViewController {
         case main
     }
     
-    fileprivate typealias CellRegistrationType = UICollectionView.CellRegistration<GoodsCollectionViewCell, Good.ID>
-    fileprivate typealias DataSourceType = UICollectionViewDiffableDataSource<Section, Good.ID>
-    fileprivate typealias SnapshotType = NSDiffableDataSourceSnapshot<Section, Good.ID>
+    fileprivate typealias CellRegistrationType = UICollectionView.CellRegistration<GoodsCollectionViewCell, Product>
+    fileprivate typealias DataSourceType = UICollectionViewDiffableDataSource<Section, Product>
+    fileprivate typealias SnapshotType = NSDiffableDataSourceSnapshot<Section, Product>
     
     private var dataSource: DataSourceType!
     
-    private lazy var goods: [Good] = []
+    private lazy var products: [Product] = []
     
     private let goodsView = GoodsView()
-    
-    private var imageRequest: Cancellable?
-    
+        
     override func loadView() {
         view = goodsView
     }
@@ -46,38 +44,51 @@ private extension GoodsViewController {
                 return
             }
             switch result {
-            case .success(let goods):
-                self.goods = goods
+            case .success(let pageData):
+                self.products = pageData.products
                 DispatchQueue.main.async {
                     self.setupDataSource()
                 }
-            case .failure(_):
+            case .failure(let error):
+                print(error.localizedDescription)
                 return
             }
         }
     }
     
     func createCellRegistration() -> CellRegistrationType {
-        return CellRegistrationType { [weak self] cell, indexPath, id in
+        return CellRegistrationType { [weak self] cell, indexPath, product in
             guard let self = self else {
                 return
             }
-            //self?.goods[indexPath.row].imageData = image ?? UIImage()
-            cell.imageRequest = NetworkService.shared.downloadImage(from: self.goods[indexPath.row].image) { [weak self] image in
-                self?.updateSnapshot(with: id)
+            DispatchQueue.main.async {
+                cell.imageRequest = NetworkService.shared.downloadImage(from: product.productImage, product: product) { [weak self] (fetchedItem, image) in
+                    guard let self = self else {
+                        return
+                    }
+                    if let img = image, img != fetchedItem.image {
+                        var updatedSnapshot = self.dataSource.snapshot()
+                        if let datasourceIndex = updatedSnapshot.indexOfItem(fetchedItem) {
+                            self.products[datasourceIndex].image = img
+                            updatedSnapshot.reloadItems([self.products[datasourceIndex]])
+                            self.dataSource.apply(updatedSnapshot, animatingDifferences: true)
+                        }
+                    }
+                }
+                cell.configure(with: self.products[indexPath.row])
             }
-            cell.configure(with: self.goods[indexPath.row], using: self.goods[indexPath.row].imageData)
+            
         }
     }
     
     func setupDataSource() {
         let goodCellRegistration = createCellRegistration()
         
-        dataSource = DataSourceType(collectionView: goodsView.collectionView, cellProvider: { collectionView, indexPath, id in
+        dataSource = DataSourceType(collectionView: goodsView.collectionView, cellProvider: { collectionView, indexPath, product in
             
             return collectionView.dequeueConfiguredReusableCell(using: goodCellRegistration,
                                                                 for: indexPath,
-                                                                item: id)
+                                                                item: product)
         })
         
         applySnapshot()
@@ -86,16 +97,9 @@ private extension GoodsViewController {
     func applySnapshot() {
         var snapshot = SnapshotType()
         snapshot.appendSections([.main])
-        let itemIdentifiers = goods.map { $0.id }
-        snapshot.appendItems(itemIdentifiers)
+        snapshot.appendItems(products)
         dataSource?.apply(snapshot)
     }
-    
-    func updateSnapshot(with id: Good.ID) {
-        var snapshot = dataSource.snapshot()
-        snapshot.reconfigureItems([id])
-        dataSource?.apply(snapshot)
-    }
-    
+
 }
 

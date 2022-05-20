@@ -13,9 +13,9 @@ class GoodsCollectionViewCell: UICollectionViewCell {
     
     var imageRequest: Cancellable?
     
-    let imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        //imageView.contentMode = .
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
@@ -76,11 +76,18 @@ class GoodsCollectionViewCell: UICollectionViewCell {
         imageRequest = nil
     }
     
-    func configure(with good: Good, using image: UIImage) {
-        ratingLabel.text = "\(good.rating)"
-        nameLabel.text = good.name
-        descriptionLabel.text = good.desc
-        priceLabel.text = "\(good.price) ₽"
+    func configure(with good: Product) {
+        imageView.image = good.image
+//        ratingLabel.text = "\(good.rating)"
+//        nameLabel.text = good.name
+//        descriptionLabel.text = good.desc
+//        priceLabel.text = "\(good.price) ₽"
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.shadowPath = UIBezierPath(roundedRect: bounds,
+                                        cornerRadius: contentView.layer.cornerRadius).cgPath
     }
     
 }
@@ -88,14 +95,23 @@ class GoodsCollectionViewCell: UICollectionViewCell {
 private extension GoodsCollectionViewCell {
     
     func setupView() {
-        layer.cornerRadius = 10
-        clipsToBounds = true
+        contentView.layer.masksToBounds = true
+        contentView.layer.cornerRadius = 12
+        
+        layer.cornerRadius = 12
+        layer.masksToBounds = false
+        
+        layer.shadowRadius = 5
+        layer.shadowOpacity = 0.2
+        layer.shadowColor = UIColor.black.cgColor
+
+        backgroundColor = .white
         contentView.addSubviews([imageView,
-                                 ratingLabel,
-                                 nameLabel,
-                                 descriptionLabel,
-                                 priceLabel,
-                                 toCartButton
+//                                 ratingLabel,
+//                                 nameLabel,
+//                                 descriptionLabel,
+//                                 priceLabel,
+//                                 toCartButton
                                 ])
         setupConstraints()
     }
@@ -107,10 +123,10 @@ private extension GoodsCollectionViewCell {
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: centerYAnchor),
             
-            ratingLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
-            ratingLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            ratingLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            ratingLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+//            ratingLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
+//            ratingLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            ratingLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            ratingLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     

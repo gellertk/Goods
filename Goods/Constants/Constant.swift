@@ -10,7 +10,7 @@ import UIKit
 struct K {
     
     struct String {
-        static let api = "http://94.127.67.113:8099/getGoods"
+        static let api = "https://bdk0sta2n0.execute-api.eu-west-1.amazonaws.com/mobile-assignment/search?page=1"
     }
     
     struct SystemImage {
